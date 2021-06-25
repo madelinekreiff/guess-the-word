@@ -21,7 +21,7 @@ const word = "magnolia";
 // function to update wordInProgress with circle symbols to represent each letter in the word
 const addLetterPlaceholders = function (word) {
     wordInProgress.innerText = "";
-    for (let i in word) {
+    for (const i of word) {
         wordInProgress.innerText += "●";
     }
     return wordInProgress;
