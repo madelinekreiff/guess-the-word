@@ -19,7 +19,7 @@ const playAgainButton = document.querySelector(".play-again");
 const word = "magnolia";
 
 // function to update wordInProgress with circle symbols to represent each letter in the word
-const addCircleSymbol = function (word) {
+const addLetterPlaceholders = function (word) {
     wordInProgress.innerText = "";
     for (let i in word) {
         wordInProgress.innerText += "●";
@@ -27,7 +27,7 @@ const addCircleSymbol = function (word) {
     return wordInProgress;
 };
 
-addCircleSymbol(word);
+addLetterPlaceholders(word);
 
 // event listener for clicking the guess button
 guessButton.addEventListener("click", function(e) {
