@@ -51,12 +51,56 @@ const makeGuess = function (letter) {
     letter.toUpperCase();
     if (guessedLetters.includes(letter)) {
         message.innerText = "You've already guessed that letter! Try again.";
-        return message.innerText;
     } else {
         guessedLetters.push(letter);
-        return guessedLetters;
+        showGuessedLetters();
+        updateWordInProgress(guessedLetters);
+    }
+    return guessedLetters;
+};
+
+// function to show guessed letters
+const showGuessedLetters = function () {
+    guessedLettersList.innerHTML = "";
+    for (let letter of guessedLetters) {
+        let li = document.createElement("li");
+        li.innerHTML = `${letter}`;
+        guessedLettersList.append(li);
     }
 };
+
+// function to update word in progress - replaces circle symbols with correct letters guessed
+const updateWordInProgress = function (guessedLetters) {
+    const wordText = wordInProgress.innerText;
+    wordInProgress.innerText = "";
+    const newInProgressArray = wordText.split("");
+
+    // change word to upper case and array
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+
+    // change guessedLetters to string, upper case, then back to array
+    const guessedLettersStr = guessedLetters.join("");
+    const guessedLettersStrUpper = guessedLettersStr.toUpperCase();
+    const guessedLettersArray = guessedLettersStrUpper.split("");
+
+    // loop through the winning word, & if a guessed letter equals a letter in the word, replace it with the correct letter
+    let i = 0;
+    for (let letter of wordArray) {
+        if (letter === guessedLettersArray[guessedLettersArray.length-1]) {
+            newInProgressArray.splice(i, 1, letter); 
+        } else {
+
+        }
+        i += 1;
+    }
+
+    // change newInProgressArray back to a string, then make it the new wordInProgress.innerText
+    const newWord = newInProgressArray.join("");
+    wordInProgress.innerText = newWord;
+
+}; // end updateWordInProgress function
+
 
 // call function to start the game
 addLetterPlaceholders(word);
