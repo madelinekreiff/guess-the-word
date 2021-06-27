@@ -23,7 +23,7 @@ message.innerText = "Let's play! Guess a letter to begin.";
 const guessedLetters = [];
 
 // global variable to contain the number of remaining guesses - this number will change
-let remainingGuesses = 8;
+let remainingGuesses = 10;
 
 // async function to fetch a random word from a .txt file of over 800 words
 const getWord = async function () {
@@ -137,7 +137,7 @@ const countGuesses = function (guess) {
     }
     if (remainingGuesses === 0) {
         message.innerText = `Game over! The word was ${word}.`;
-        remainingSpan.innerText = "0 guesses";
+        startOver();
     } else if (remainingGuesses === 1) {
         remainingSpan.innerText = "1 guess";
     } else if (remainingGuesses > 1) {
@@ -149,8 +149,17 @@ const countGuesses = function (guess) {
 const checkWin = function () {
     if (wordInProgress.innerText === word) {
         message.classList.add("win");
-        message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>';
+        message.innerHTML = '<p class="highlight">You guessed the correct word! Congrats!</p>';
+        startOver();
     }
+};
+
+// function to hide guess button, show play again button & clear the guessedLetters array
+const startOver = function () {
+    guessButton.classList.add("hide");
+    remaining.classList.add("hide");
+    guessedLettersList.classList.add("hide");
+    playAgainButton.classList.remove("hide");
 };
 
 // event listener for clicking the guess button
