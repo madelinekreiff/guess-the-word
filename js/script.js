@@ -20,7 +20,7 @@ let word = "";
 message.innerText = "Let's play! Guess a letter to begin.";
 
 // array to contain all the letters the player guesses
-const guessedLetters = [];
+let guessedLetters = [];
 
 // global variable to contain the number of remaining guesses - this number will change
 let remainingGuesses = 10;
@@ -174,3 +174,18 @@ guessButton.addEventListener("click", function(e) {
         makeGuess(letter);
     }
 });
+
+// event listener for clicking the play again button
+playAgainButton.addEventListener("click", function(e) {
+    message.classList.remove("win");
+    message.innerText = "";
+    guessedLettersList.innerHTML = "";
+    remainingGuesses = 10;
+    guessedLetters = [];
+    remainingSpan.innerText = `${remainingGuesses} guesses`;
+    guessButton.classList.remove("hide");
+    remaining.classList.remove("hide");
+    guessedLettersList.classList.remove("hide");
+    playAgainButton.classList.add("hide");
+    getWord();
+})
