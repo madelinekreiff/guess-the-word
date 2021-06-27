@@ -37,6 +37,7 @@ const getWord = async function () {
     addLetterPlaceholders(word);
 };
 
+// start game
 getWord();
 
 // function to update wordInProgress with circle symbols to represent each letter in the word
