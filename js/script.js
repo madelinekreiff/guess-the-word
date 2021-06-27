@@ -22,6 +22,9 @@ const wordUpper = word.toUpperCase();
 // array to contain all the letters the player guesses
 const guessedLetters = [];
 
+// global variable to contain the number of remaining guesses - this number will change
+let remainingGuesses = 8;
+
 // function to update wordInProgress with circle symbols to represent each letter in the word
 const addLetterPlaceholders = function (word) {
     wordInProgress.innerText = "";
@@ -55,6 +58,7 @@ const makeGuess = function (letter) {
     } else {
         guessedLetters.push(letter);
         showGuessedLetters();
+        countGuesses(letter);
         updateWordInProgress(guessedLetters);
     }
     return guessedLetters;
@@ -64,21 +68,19 @@ const makeGuess = function (letter) {
 const showGuessedLetters = function () {
     guessedLettersList.innerHTML = "";
     for (let letter of guessedLetters) {
+        let letterUpper = letter.toUpperCase();
         let li = document.createElement("li");
-        li.innerHTML = `${letter}`;
+        li.innerHTML = `${letterUpper}`;
         guessedLettersList.append(li);
     }
 };
 
 // function to update word in progress - replaces circle symbols with correct letters guessed
 const updateWordInProgress = function (guessedLetters) {
-    // change wordInProgress.innerText to an array
+    // change wordInProgress.innerText to an array & empty
     const wordText = wordInProgress.innerText;
     const newInProgressArray = wordText.split("");
-    
-    // empty .innerTexts
     wordInProgress.innerText = "";
-    message.innerText = "";
 
     // change wordUpper to an array
     const wordArray = wordUpper.split("");
@@ -98,9 +100,6 @@ const updateWordInProgress = function (guessedLetters) {
                 }
                 i += 1;
             }
-            message.innerText = `Good guess! The word has the letter ${letter} in it.`;
-        } else {
-            message.innerText = `Sorry, the word does not have the letter ${letter} in it. Try again!`;
         }
     }
     // change newInProgressArray back to a string, then make it the new wordInProgress.innerText
@@ -108,7 +107,28 @@ const updateWordInProgress = function (guessedLetters) {
     wordInProgress.innerText = newWord;
 
     checkWin();
-}; // end updateWordInProgress function
+};
+
+// function to update count of remaining guesses
+const countGuesses = function (guess) {
+    // change wordUpper to an array & guess to upper case
+    const wordArray = wordUpper.split("");
+    const lastLetter = guess.toUpperCase();
+    if (wordArray.includes(lastLetter)) {
+        message.innerText = `Good guess! The word has the letter ${lastLetter} in it.`;
+    } else {
+        remainingGuesses -= 1;
+        message.innerText = `Sorry, the word does not have the letter ${lastLetter} in it. Try again!`;
+    }
+    if (remainingGuesses === 0) {
+        message.innerText = `Game over! The word was ${wordUpper}.`;
+        remainingSpan.innerText = "0 guesses";
+    } else if (remainingGuesses === 1) {
+        remainingSpan.innerText = "1 guess";
+    } else if (remainingGuesses > 1) {
+        remainingSpan.innerText = `${remainingGuesses} guesses`;
+    }
+};
 
 // function to check if player won
 const checkWin = function () {
@@ -117,7 +137,6 @@ const checkWin = function () {
         message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>';
     }
 };
-
 
 // call function to start the game
 addLetterPlaceholders(word);
