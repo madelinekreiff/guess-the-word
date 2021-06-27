@@ -98,9 +98,9 @@ const updateWordInProgress = function (guessedLetters) {
                 }
                 i += 1;
             }
-            message.innerText = `Good guess!`;
+            message.innerText = `Good guess! The word has the letter ${letter} in it.`;
         } else {
-            message.innerText = "Try again!";
+            message.innerText = `Sorry, the word does not have the letter ${letter} in it. Try again!`;
         }
     }
     // change newInProgressArray back to a string, then make it the new wordInProgress.innerText
