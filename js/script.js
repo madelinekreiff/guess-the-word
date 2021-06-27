@@ -17,6 +17,7 @@ const playAgainButton = document.querySelector(".play-again");
 
 // starting word to test game
 const word = "magnolia";
+const wordUpper = word.toUpperCase();
 
 // array to contain all the letters the player guesses
 const guessedLetters = [];
@@ -75,8 +76,7 @@ const updateWordInProgress = function (guessedLetters) {
     wordInProgress.innerText = "";
     const newInProgressArray = wordText.split("");
 
-    // change word to upper case and array
-    const wordUpper = word.toUpperCase();
+    // change wordUpper to an array
     const wordArray = wordUpper.split("");
 
     // change guessedLetters to string, upper case, then back to array
@@ -94,12 +94,20 @@ const updateWordInProgress = function (guessedLetters) {
         }
         i += 1;
     }
-
     // change newInProgressArray back to a string, then make it the new wordInProgress.innerText
     const newWord = newInProgressArray.join("");
     wordInProgress.innerText = newWord;
 
+    checkWin();
 }; // end updateWordInProgress function
+
+// function to check if player won
+const checkWin = function () {
+    if (wordInProgress.innerText === wordUpper) {
+        message.classList.add("win");
+        message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>';
+    }
+};
 
 
 // call function to start the game
