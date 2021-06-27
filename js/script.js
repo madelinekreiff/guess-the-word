@@ -72,9 +72,13 @@ const showGuessedLetters = function () {
 
 // function to update word in progress - replaces circle symbols with correct letters guessed
 const updateWordInProgress = function (guessedLetters) {
+    // change wordInProgress.innerText to an array
     const wordText = wordInProgress.innerText;
-    wordInProgress.innerText = "";
     const newInProgressArray = wordText.split("");
+    
+    // empty .innerTexts
+    wordInProgress.innerText = "";
+    message.innerText = "";
 
     // change wordUpper to an array
     const wordArray = wordUpper.split("");
@@ -84,15 +88,20 @@ const updateWordInProgress = function (guessedLetters) {
     const guessedLettersStrUpper = guessedLettersStr.toUpperCase();
     const guessedLettersArray = guessedLettersStrUpper.split("");
 
-    // loop through the winning word, & if a guessed letter equals a letter in the word, replace it with the correct letter
-    let i = 0;
-    for (let letter of wordArray) {
-        if (letter === guessedLettersArray[guessedLettersArray.length-1]) {
-            newInProgressArray.splice(i, 1, letter); 
+    // loop through guessedLettersArray, & if a guessed letter equals a letter in the word, replace circle symbol with the correct letter
+    for (let letter of guessedLettersArray) {
+        if (wordArray.includes(letter)) {
+            let i = 0;
+            for (let wordLetter of wordArray) {
+                if (wordLetter === letter) {
+                    newInProgressArray.splice(i, 1, letter);
+                }
+                i += 1;
+            }
+            message.innerText = `Good guess!`;
         } else {
-
+            message.innerText = "Try again!";
         }
-        i += 1;
     }
     // change newInProgressArray back to a string, then make it the new wordInProgress.innerText
     const newWord = newInProgressArray.join("");
