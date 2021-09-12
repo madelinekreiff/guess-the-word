@@ -66,6 +66,10 @@ h1 {
   font-size: 30px;
 }
 
+.remaining {
+  text-align: center;
+}
+
 .guessed-letters {
   padding: 0;
   list-style: none;
