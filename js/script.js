@@ -165,7 +165,7 @@ const startOver = function () {
 // event listener for clicking the guess button
 guessButton.addEventListener("click", function(e) {
     e.preventDefault(); // prevent reloading behavior
-    const inputValue = letterInput.value;
+    const inputValue = letterInput.value.toUpperCase();
     letterInput.value = "";
     message.innerText = "";
 
